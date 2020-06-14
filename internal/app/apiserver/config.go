@@ -1,7 +1,7 @@
 package apiserver
 
 import (
-	"github.com/shtormnick/http-rest-api/internal/app/store"
+	"GO/htt-rest-api/internal/app/store"
 )
 
 type Config struct {
