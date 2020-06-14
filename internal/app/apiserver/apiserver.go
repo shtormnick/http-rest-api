@@ -12,6 +12,7 @@ type APIServer struct {
 	config *Config
 	logger *logrus.Logger
 	router *mux.Router
+	store *store.Store
 }
 
 func New(config *Config) *APIServer {
@@ -27,7 +28,12 @@ func (s *APIServer) Start() error {
 		return err
 	}
 
-	s.configRouter()
+	s.configureRouter()
+
+	if err := s.configureRouter(); err != nil {
+		return err
+	}
+
 	s.logger.Info("starting api server")
 
 	return http.ListenAndServe(s.config.BindAddr, s.router)
@@ -43,7 +49,7 @@ func (s *APIServer) configureLogger() error {
 	return nil
 }
 
-func (s *APIServer) configRouter() {
+func (s *APIServer) configureRouter() {
 	s.router.HandleFunc("/hello", s.handelerHello())
 }
 
